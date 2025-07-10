@@ -1,41 +1,38 @@
 ﻿@model IEnumerable<JokesWebApp.Models.Joke>
-
+@using System.Linq;
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Jokes";
+    var jokesList = Model?.ToList() ?? new List<JokesWebApp.Models.Joke>();
+    var random = new System.Random();
+    var randomJoke = jokesList.Count > 0 ? jokesList[random.Next(jokesList.Count)] : null;
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.JokeQuestion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.JokeAnswer)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.JokeQuestion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JokeAnswer)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+<div class="my-4 text-center">
+    <h1 class="display-4 mb-3">😂 Jokes Collection</h1>
+    <p class="lead">Enjoy the best jokes on your localhost!</p>
+    <a class="btn btn-success btn-lg mb-3" asp-action="Create"><i class="bi bi-plus-circle"></i> Add New Joke</a>
+</div>
+@if (randomJoke != null)
+{
+    <div class="alert alert-info shadow-sm mb-4 w-75 mx-auto">
+        <strong>Random Joke:</strong> <span class="fw-bold">@randomJoke.JokeQuestion</span><br />
+        <span class="text-muted">@randomJoke.JokeAnswer</span>
+    </div>
 }
-    </tbody>
-</table>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+@foreach (var item in jokesList) {
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">@item.JokeQuestion</h5>
+                <p class="card-text text-muted">@item.JokeAnswer</p>
+            </div>
+            <div class="card-footer bg-white border-0 d-flex justify-content-end gap-2">
+                <a class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id" title="Edit"><i class="bi bi-pencil"></i> Edit</a>
+                <a class="btn btn-outline-info btn-sm" asp-action="Details" asp-route-id="@item.Id" title="Details"><i class="bi bi-info-circle"></i> Details</a>
+                <a class="btn btn-outline-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id" title="Delete"><i class="bi bi-trash"></i> Delete</a>
+            </div>
+        </div>
+    </div>
+}
+</div>

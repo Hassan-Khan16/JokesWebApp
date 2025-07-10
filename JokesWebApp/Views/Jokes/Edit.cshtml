@@ -1,39 +1,36 @@
 ﻿@model JokesWebApp.Models.Joke
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Joke";
 }
-
-<h1>Edit</h1>
-
-<h4>Joke</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="JokeQuestion" class="control-label"></label>
-                <input asp-for="JokeQuestion" class="form-control" />
-                <span asp-validation-for="JokeQuestion" class="text-danger"></span>
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0"><i class="bi bi-pencil"></i> Edit Joke</h3>
             </div>
-            <div class="form-group">
-                <label asp-for="JokeAnswer" class="control-label"></label>
-                <input asp-for="JokeAnswer" class="form-control" />
-                <span asp-validation-for="JokeAnswer" class="text-danger"></span>
+            <div class="card-body">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="mb-3">
+                        <label asp-for="JokeQuestion" class="form-label"></label>
+                        <input asp-for="JokeQuestion" class="form-control" placeholder="Edit the joke question..." />
+                        <span asp-validation-for="JokeQuestion" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="JokeAnswer" class="form-label"></label>
+                        <input asp-for="JokeAnswer" class="form-control" placeholder="Edit the punchline..." />
+                        <span asp-validation-for="JokeAnswer" class="text-danger"></span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back to List</a>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> Save</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
